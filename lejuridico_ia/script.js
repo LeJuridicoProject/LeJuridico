@@ -31,7 +31,7 @@ app.get('/models', async (req, res) => {
 
 app.post('/sugest', async (req, res) => {
     try {
-        const { message } = req.body; 
+        const { message } = req.body; // Armazena os dados do scrape [tudo em json]
         if (!message) {
             return res.status(400).json({ error: 'Message is required in the request body' });
         }
@@ -61,7 +61,7 @@ app.post('/sugest', async (req, res) => {
 
 app.post('/peca', async (req, res) => {
     try {
-        const { message } = req.body; // Obtém a peça processual que será enviada pela escolha do usuário 
+        const { message } = req.body; // Armazena a opção escolhida pelo usuário (tipo de peça), e também os dados do scrape [tudo em json]
         if (!message) {
             return res.status(400).json({ error: 'Message is required in the request body' });
         }
