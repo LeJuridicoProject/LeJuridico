@@ -29,9 +29,9 @@ app.get('/models', async (req, res) => {
 
 
 
-app.post('/bot', async (req, res) => {
+app.post('/sugest', async (req, res) => {
     try {
-        const { message } = req.body; // Obtém o conteúdo do cliente no corpo da requisição
+        const { message } = req.body; 
         if (!message) {
             return res.status(400).json({ error: 'Message is required in the request body' });
         }
@@ -40,7 +40,37 @@ app.post('/bot', async (req, res) => {
             messages: [
                 {
                     role: 'user',
-                    content: message,
+                    content: "Irei enviar detalhes sobre um processo judicial, com base nisso, sugira o nome de 3 peças processuais mais prováveis dessas informações serem relacionadas, seu retorno deve ser apenas os 3 nomes das peças, aqui está os detalhes sobre o processo : " + message,
+                },
+            ],
+            model: 'deepseek-r1-distill-llama-70b', 
+        });
+
+        const botReply = completion.choices[0]?.message?.content;
+
+        if (botReply) {
+            res.status(200).json({ reply: botReply });
+        } else {
+            res.status(500).json({ error: 'No response from the Groq API' });
+        }
+    } catch (error) {
+        console.error('Error creating completion:', error.message);
+        res.status(500).json({ error: 'Failed to create completion', details: error.message });
+    }
+});
+
+app.post('/peca', async (req, res) => {
+    try {
+        const { message } = req.body; // Obtém a peça processual que será enviada pela escolha do usuário 
+        if (!message) {
+            return res.status(400).json({ error: 'Message is required in the request body' });
+        }
+
+        const completion = await groq.chat.completions.create({
+            messages: [
+                {
+                    role: 'user',
+                    content: "Faça uma peça processual do seguinte assunto e com as seguintes informações " + message,
                 },
             ],
             model: 'deepseek-r1-distill-llama-70b', 
