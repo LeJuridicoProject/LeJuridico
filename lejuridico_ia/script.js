@@ -40,7 +40,7 @@ app.post('/sugest', async (req, res) => {
             messages: [
                 {
                     role: 'user',
-                    content: "Irei enviar detalhes sobre um processo judicial, com base nisso, sugira o nome de 3 peças processuais mais prováveis dessas informações serem relacionadas, seu retorno deve ser apenas os 3 nomes das peças, aqui está os detalhes sobre o processo : " + message,
+                    content: "Fornecerei detalhes sobre um processo judicial. Com base nessas informações, identifique e retorne, de forma objetiva e sem comentários adicionais, os três nomes das peças processuais mais pertinentes ao caso. : " + message,
                 },
             ],
             model: 'deepseek-r1-distill-llama-70b', 
@@ -70,7 +70,7 @@ app.post('/peca', async (req, res) => {
             messages: [
                 {
                     role: 'user',
-                    content: "Faça uma peça processual do seguinte assunto e com as seguintes informações " + message,
+                    content: "Fornecerei a seguir um assunto específico e as informações pertinentes a um processo judicial. Com base nesses dados, elabore uma peça processual de forma completa, fundamentada e objetiva, adotando a abordagem tradicional. Sua resposta deverá conter exclusivamente o texto da peça processual, sem comentários adicionais. " + message,
                 },
             ],
             model: 'deepseek-r1-distill-llama-70b', 
