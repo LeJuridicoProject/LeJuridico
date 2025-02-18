@@ -51,17 +51,17 @@ def get_movimentos(grau, html):
     tags = tags_por_grau.get(grau)
     movimentos = html.select(tags.get("container"))
     for movimento in movimentos:
-        data_movimento = clean_data(
-            movimento.find(class_=tags.get("data")).text)
+        data_movimento = clean_data(movimento.find(class_=tags.get("data")).text)
+        descricao_movimento = clean_data(movimento.find(class_=tags.get("descricao")).text)
 
-        descricao_movimento = clean_data(
-            movimento.find(class_=tags.get("descricao")).text)
+        # Cria o objeto Movimentacao
+        movimentacao_obj = Movimentacao(data=data_movimento, descricao=" ".join(descricao_movimento.split()))
 
-        movimentos_list.append(
-            Movimentacao(data=data_movimento,
-                         descricao=" ".join(descricao_movimento.split()))
-        )
+        # Adiciona ao list usando .dict() para garantir a serialização
+        movimentos_list.append(movimentacao_obj.dict())
+    
     return movimentos_list
+
 
 
 def get_partes(html):

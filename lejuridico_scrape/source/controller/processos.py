@@ -23,7 +23,7 @@ def valid_process_id(numero_processo: str):
     return validator.validate({"numero_processo": numero_processo}, id_processo_schema)
 
 
-@router.post("/busca")
+@router.post("/buscaprocesso")
 def buscar_processo(process_request: ProcessRequestBody):
     """
     API que busca dados de um processo em todos os graus dos
